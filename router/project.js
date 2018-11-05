@@ -86,6 +86,45 @@ router.put('/newVersion/:projectId', function (req, res) {
 });
 
 
+//              === getting all versions ===
+
+router.get('/allVersions/:projectId', function (req, res) {
+    let versionArr = []
+    Project.findById(req.params.projectId, (err, project) => {
+
+        if (!err) {
+            project.allVersions.map(version=>{
+                let versionInfo = {
+                    editorName: version.editorName,
+                    creaetedDate : version.date,
+                    versionNumber: version.versionNumber
+                }
+                versionArr.push(versionInfo);
+            })
+            res.send(versionArr);
+
+        } else {
+            res.send(err);
+        }
+    })
+});
+
+//              === getting specific versions ===
+
+router.get('/version/:projectId/:index', function (req, res) {
+
+    Project.findById(req.params.projectId, (err, project) => {
+        let currentVersion = project.allVersions[req.params.index -1];
+        if (!err) {
+            
+            res.send(currentVersion);
+
+        } else {
+            res.send(err);
+        }
+    })
+});
+
 // === getting all projects ===> returns all the names and id's of all projects  ===
 
 

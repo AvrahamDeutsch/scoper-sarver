@@ -127,7 +127,7 @@ router.delete('/assumption/:projectId/:index', function (req, res) {
 });
 
 
-//      === ading subjects to correct version ===
+//      === adding subjects to correct version ===
 
 router.put('/subject/:projectId', function (req, res) {
     Project.findById(req.params.projectId, (err, version) => {

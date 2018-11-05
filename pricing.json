@@ -10,6 +10,57 @@
                         {
                             "task": "",
                             "days": "Number"
+                        },
+                        {
+                            "task": "",
+                            "days": "Number"
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "days": "Number",
+                    "tasks": [
+                        {
+                            "task": "",
+                            "days": "Number"
+                        },
+                        {
+                            "task": "",
+                            "days": "Number"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "milstoneName": "",
+            "container": [
+                {
+                    "name": "",
+                    "days": "Number",
+                    "tasks": [
+                        {
+                            "task": "",
+                            "days": "Number"
+                        },
+                        {
+                            "task": "",
+                            "days": "Number"
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "days": "Number",
+                    "tasks": [
+                        {
+                            "task": "",
+                            "days": "Number"
+                        },
+                        {
+                            "task": "",
+                            "days": "Number"
                         }
                     ]
                 }

@@ -77,6 +77,7 @@ router.delete('/:projectId/:actorIndex/:storyIndex', function (req, res) {
 
 //       === getting all user stories of specific project     ===
 
+
 router.get('/allStories/:projectId', function (req, res) {
 
     let requirement = {
