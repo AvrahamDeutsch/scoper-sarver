@@ -6,6 +6,7 @@ const actor = require('./router/actor');
 const general = require('./router/general');
 const project = require('./router/project');
 const userStory = require('./router/userStory');
+const pricing = require('./router/pricing');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/actor', actor);
 app.use('/api/project', project);
 app.use('/api/general', general);
 app.use('/api/userStory', userStory);
+app.use('/api/pricing', pricing);
 
 
 app.listen(5000);

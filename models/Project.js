@@ -17,8 +17,26 @@ const Actor = new Schema({
 
 const Subject = new Schema({
     name: String,
-    description :String
-  })
+    description: String
+})
+
+const Task = new Schema({
+    task : String,
+    days : Number
+});
+
+const TaskContaner = new Schema({
+    containerName: String,
+    days : Number,
+    price : {type: Number, default: 0},
+    tasks: [Task]
+})
+
+const Process = new Schema({
+    milestoneName : String,
+    processTotalPrice : {type: Number, default: 0},
+    containers : [TaskContaner]
+})
 
 const Version = new Schema({
     rejectionExplenation: String,
@@ -29,7 +47,10 @@ const Version = new Schema({
     generalAssumptions: [String],
     currentAssumptions: [String],
     date: { type: Date, default: Date.now },
-    allActors: [Actor]
+    allActors: [Actor],
+    pricing: [Process],
+    grandTotalPrice: {type: Number, default: 0},
+    discount : {type: Number, default: 0}
 });
 
 const Project = new Schema({
