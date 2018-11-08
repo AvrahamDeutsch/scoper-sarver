@@ -12,6 +12,7 @@ router.post("/newProject", function (req, res) {
     let firstVersion = new Project({
         projectName: req.body.projectName,
         allVersions: {
+            additionalPricing: "",
             rejectionExplenation: "",
             editorName: req.body.editorName,
             projectDescription: '',
@@ -66,6 +67,7 @@ router.put('/newVersion/:projectId', function (req, res) {
                 allActors: currentVersion.allActors,
                 generalAssumptions: currentVersion.generalAssumptions,
                 currentAssumptions: currentVersion.currentAssumptions,
+                additionalPricing: currentVersion.additionalPricing,
                 subjects: currentVersion.subjects
             }
 
@@ -138,6 +140,33 @@ router.get('/allProjects', function (req, res) {
             res.send(err);
         }
     })
+});
+
+router.get('/pdf', function (req, res) {
+    var http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path');
+
+http.createServer(function(request, response) {
+    var filePath = path.join(__dirname, 'mypdf.pdf');
+    var stat = fileSystem.statSync(filePath);
+
+    // response.writeHead(200, {
+    //     'Content-Type': 'audio/mpeg',
+    //     'Content-Length': stat.size
+    // });
+
+    var readStream = fileSystem.createReadStream(filePath);
+    // We replaced all the event handlers with a simple call to readStream.pipe()
+    readStream.pipe(response);
+})
+        // pdf = ""
+        if (!err) {
+            res.send(pdf);
+
+        } else {
+            res.send(err);
+        }
 });
 
 

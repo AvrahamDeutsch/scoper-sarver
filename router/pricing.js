@@ -20,7 +20,6 @@ router.put('/:projectId', function (req, res) {
                     res.send('pricing added');
                     
                 } else {
-                    console.log('req.body.pricing');
                     res.send(err);
                 }
             });
