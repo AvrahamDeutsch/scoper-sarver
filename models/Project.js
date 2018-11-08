@@ -49,7 +49,9 @@ const Version = new Schema({
     date: { type: Date, default: Date.now },
     allActors: [Actor],
     pricing: [Process],
+    additionalPricing: String,
     grandTotalPrice: {type: Number, default: 0},
+    subTotalPrice: {type: Number, default: 0},
     discount : {type: Number, default: 0}
 });
 

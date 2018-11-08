@@ -7,6 +7,7 @@ const general = require('./router/general');
 const project = require('./router/project');
 const userStory = require('./router/userStory');
 const pricing = require('./router/pricing');
+// const pdf = require('./pdfGenerator');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/project', project);
 app.use('/api/general', general);
 app.use('/api/userStory', userStory);
 app.use('/api/pricing', pricing);
+// app.use('/api/pdf', pdf);
 
 
 app.listen(5000);

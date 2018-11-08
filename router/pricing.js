@@ -9,16 +9,45 @@ const Project = require('../models/Project');
 router.put('/:projectId', function (req, res) {
 
     Project.findById(req.params.projectId, (err, project) => {
-
+        
         if (!err) {
-
+            
             let currentVersion = project.allVersions[project.allVersions.length - 1];
             currentVersion.pricing = req.body.pricing;
-
+            
             project.save((err, version) => {
                 if (!err) {
                     res.send('pricing added');
+                    
+                } else {
+                    console.log('req.body.pricing');
+                    res.send(err);
+                }
+            });
+        } else {
+            res.send(err);
+        }
+    })
+});
 
+//           === add subTotal, grandTotal & discount to project ===
+
+router.put('/discount/:projectId', function (req, res) {
+    
+    Project.findById(req.params.projectId, (err, project) => {
+        
+        let currentVersion = project.allVersions[project.allVersions.length - 1];
+        if (!err) {
+            
+            currentVersion.grandTotalPrice = req.body.grandTotalPrice;
+            currentVersion.discount = req.body.discount;
+            currentVersion.subTotalPrice = req.body.subTotalPrice;
+            
+            
+            project.save((err, version) => {
+                if (!err) {
+                    res.send('pricing updated');
+                    
                 } else {
                     res.send(err);
                 }
@@ -29,47 +58,17 @@ router.put('/:projectId', function (req, res) {
     })
 });
 
-// router.put('/price/:projectId', function (req, res) {
+//           === add additionalPricing to project ===
 
-//   Project.findById(req.params.projectId, (err, project) => {
-
-//     let currentVersion = project.allVersions[project.allVersions.length - 1];
-//     if (!err) {
-
-//         currentVersion.pricing.map(process=>{
-//             process.processTotalPrice = ''
-//             process.containers.map(container=>{
-//                 container.price = ''
-//             })
-//         })
-
-
-//       project.save((err, version) => {
-//         if (!err) {
-//           res.send('pricing updated');
-
-//         } else {
-//           res.send(err);
-//         }
-//       });
-//     } else {
-//       res.send(err);
-//     }
-//   })
-// });
-
-//           === add total discount to project ===
-
-router.put('/discount/:projectId', function (req, res) {
+router.put('/additionalPricing/:projectId', function (req, res) {
 
     Project.findById(req.params.projectId, (err, project) => {
 
         let currentVersion = project.allVersions[project.allVersions.length - 1];
         if (!err) {
 
-            // currentVersion.grandTotalPrice = req.body.grandTotalPrice;
-            currentVersion.discount = req.body.discount;
-
+            currentVersion.additionalPricing = req.body.additionalPricing;
+           
             project.save((err, version) => {
                 if (!err) {
                     res.send('pricing updated');
