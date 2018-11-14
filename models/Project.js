@@ -34,6 +34,7 @@ const TaskContaner = new Schema({
 
 const Process = new Schema({
     milestoneName : String,
+    comment : {type: String, default: ''},
     processTotalPrice : {type: Number, default: 0},
     containers : [TaskContaner]
 })
@@ -46,12 +47,19 @@ const Version = new Schema({
     subjects: [Subject],
     generalAssumptions: [String],
     currentAssumptions: [String],
-    date: { type: Date, default: Date.now },
+    // date: Date ,
+    date: String,
     allActors: [Actor],
     pricing: [Process],
     additionalPricing: String,
     grandTotalPrice: {type: Number, default: 0},
     subTotalPrice: {type: Number, default: 0},
+    projectName: String,
+    payment: String,
+    diagramDescription: String,
+    diagramLink: String,
+    specificationDescription: String,
+    specificationLink: String,
     discount : {type: Number, default: 0}
 });
 

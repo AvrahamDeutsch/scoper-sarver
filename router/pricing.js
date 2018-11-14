@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 const Project = require('../models/Project');
 
@@ -60,17 +59,67 @@ router.put('/discount/:projectId', function (req, res) {
 //           === add additionalPricing to project ===
 
 router.put('/additionalPricing/:projectId', function (req, res) {
+    
+    Project.findById(req.params.projectId, (err, project) => {
+        
+        let currentVersion = project.allVersions[project.allVersions.length - 1];
+        if (!err) {
+            
+            currentVersion.additionalPricing = req.body.additionalPricing;
+            
+            project.save((err, version) => {
+                if (!err) {
+                    res.send('pricing updated');
+                    
+                } else {
+                    res.send(err);
+                }
+            });
+        } else {
+            res.send(err);
+        }
+    })
+});
+
+//           === add comment to process in the pricing section ===
+
+router.put('/comment/:projectId/:index', function (req, res) {
 
     Project.findById(req.params.projectId, (err, project) => {
 
         let currentVersion = project.allVersions[project.allVersions.length - 1];
         if (!err) {
 
-            currentVersion.additionalPricing = req.body.additionalPricing;
+            currentVersion.pricing[req.params.index].comment = req.body.comment
            
             project.save((err, version) => {
                 if (!err) {
-                    res.send('pricing updated');
+                    res.send('comment added');
+
+                } else {
+                    res.send(err);
+                }
+            });
+        } else {
+            res.send(err);
+        }
+    })
+});
+
+//           === add payment to version ===
+
+router.put('/payment/:projectId', function (req, res) {
+
+    Project.findById(req.params.projectId, (err, project) => {
+
+        let currentVersion = project.allVersions[project.allVersions.length - 1];
+        if (!err) {
+
+            currentVersion.payment = req.body.payment
+           
+            project.save((err, version) => {
+                if (!err) {
+                    res.send('payment added');
 
                 } else {
                     res.send(err);

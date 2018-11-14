@@ -1,10 +1,12 @@
 const express = require('express');
+const moment = require('moment');
 
 const router = express.Router();
 
 const Project = require('../models/Project');
 
 
+var date = moment().format('LLL');
 //           === posting new project ===
 
 router.post("/newProject", function (req, res) {
@@ -12,6 +14,7 @@ router.post("/newProject", function (req, res) {
     let firstVersion = new Project({
         projectName: req.body.projectName,
         allVersions: {
+            projectName: req.body.projectName,
             additionalPricing: "",
             rejectionExplenation: "",
             editorName: req.body.editorName,
@@ -19,7 +22,13 @@ router.post("/newProject", function (req, res) {
             subjects: [],
             generalAssumptions: [],
             currentAssumptions: [],
+            diagramDescription: '',
+            diagramLink: '',
+            specificationDescription: '',
+            specificationLink: '',
             versionNumber: 1,
+            payment: '',
+            date: `${date}`,
             allActors: []
         }
     });
@@ -63,20 +72,27 @@ router.put('/newVersion/:projectId', function (req, res) {
                 rejectionExplenation: "",
                 editorName: req.body.editorName,
                 projectDescription: currentVersion.projectDescription,
+                diagramDescription: currentVersion.diagramDescription,
+                diagramLink: currentVersion.diagramLink,
+                projectName: currentVersion.projectName,
                 versionNumber: currentVersion.versionNumber + 1,
                 allActors: currentVersion.allActors,
                 generalAssumptions: currentVersion.generalAssumptions,
                 currentAssumptions: currentVersion.currentAssumptions,
                 additionalPricing: currentVersion.additionalPricing,
+                specificationDescription: currentVersion.specificationDescription,
+                specificationLink: currentVersion.specificationLink,
+                payment: currentVersion.payment,
+                date: `${date}`,
                 subjects: currentVersion.subjects
             }
 
             project.allVersions.push(newVersion);
-            project.save((err, version)=>{
+            project.save((err, version) => {
                 if (!err) {
                     res.send('new version creaeted');
-                    
-                }else{
+
+                } else {
                     res.send(err);
                 }
             });
@@ -95,10 +111,10 @@ router.get('/allVersions/:projectId', function (req, res) {
     Project.findById(req.params.projectId, (err, project) => {
 
         if (!err) {
-            project.allVersions.map(version=>{
+            project.allVersions.map(version => {
                 let versionInfo = {
                     editorName: version.editorName,
-                    creaetedDate : version.date,
+                    creaetedDate: version.date,
                     versionNumber: version.versionNumber
                 }
                 versionArr.push(versionInfo);
@@ -116,9 +132,9 @@ router.get('/allVersions/:projectId', function (req, res) {
 router.get('/version/:projectId/:index', function (req, res) {
 
     Project.findById(req.params.projectId, (err, project) => {
-        let currentVersion = project.allVersions[req.params.index -1];
+        let currentVersion = project.allVersions[req.params.index - 1];
         if (!err) {
-            
+
             res.send(currentVersion);
 
         } else {
@@ -142,32 +158,7 @@ router.get('/allProjects', function (req, res) {
     })
 });
 
-router.get('/pdf', function (req, res) {
-    var http = require('http'),
-    fileSystem = require('fs'),
-    path = require('path');
 
-http.createServer(function(request, response) {
-    var filePath = path.join(__dirname, 'mypdf.pdf');
-    var stat = fileSystem.statSync(filePath);
-
-    // response.writeHead(200, {
-    //     'Content-Type': 'audio/mpeg',
-    //     'Content-Length': stat.size
-    // });
-
-    var readStream = fileSystem.createReadStream(filePath);
-    // We replaced all the event handlers with a simple call to readStream.pipe()
-    readStream.pipe(response);
-})
-        // pdf = ""
-        if (!err) {
-            res.send(pdf);
-
-        } else {
-            res.send(err);
-        }
-});
 
 
 module.exports = router;

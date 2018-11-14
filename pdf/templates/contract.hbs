@@ -6,7 +6,21 @@
 <body>
 
     <div id='pdfPreview' className="pdfPreview">
-     <h1> {{data.name}} </h1>
+        <h1> {{projectName}} </h1>
+        <h1> {{editorName}} </h1>
+
+        <ul class="people_list">
+            {{#each allActors }}
+            <li>{{this.name}} {{this.description}}</li>
+            {{#each this.userStoreis }}
+            <li>{{this.userStory}}</li>
+            {{/each}} {{/each}}
+
+        </ul>
+        <div id="logo">
+
+            <img src=\{{diagramLink}} alt="from hbs">
+        </div>
     </div>
 
 

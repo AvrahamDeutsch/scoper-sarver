@@ -47,7 +47,6 @@ router.put('/:projectId/:index', function (req, res) {
 
     if (!err) {
       let currentActor = actor.allVersions[actor.allVersions.length - 1].allActors[req.params.index];
-      console.log('currentActor: ', currentActor);
       currentActor.name = name;
       currentActor.description = description;
 

@@ -147,6 +147,57 @@ router.put('/subject/:projectId', function (req, res) {
     })
 });
 
+//      === adding High Level Architecture to version ===
+/**
+ *     req.params.diagram can be either diagramDescription
+ *     or diagramLink
+ */
+
+router.put('/:diagram/:projectId', function (req, res) {
+    Project.findById(req.params.projectId, (err, version) => {
+        if (!err) {
+            let currentVersion = version.allVersions[version.allVersions.length - 1];
+            currentVersion[req.params.diagram] = req.body.diagram;
+                       
+            version.save((err, project) => {
+                if (!err) {
+                    res.send("diagram added");
+                } else {
+                    res.send(err);
+                }
+            })
+        } else {
+            res.send(err);
+        }
+    })
+});
+
+//      === adding Specification (UX) to version ===
+
+/**
+ *     req.params.diagram can be either specificationDescription
+ *     or specificationLink
+ */
+
+router.put('/specification/:specification/:projectId', function (req, res) {
+    Project.findById(req.params.projectId, (err, version) => {
+        if (!err) {
+            let currentVersion = version.allVersions[version.allVersions.length - 1];
+            currentVersion[req.params.specification] = req.body.specification;
+                       
+            version.save((err, project) => {
+                if (!err) {
+                    res.send("specification (UX) added");
+                } else {
+                    res.send(err);
+                }
+            })
+        } else {
+            res.send(err);
+        }
+    })
+});
+
 
 
 module.exports = router;
