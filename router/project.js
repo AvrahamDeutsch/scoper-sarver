@@ -7,12 +7,14 @@ const Project = require('../models/Project');
 
 
 var date = moment().format('LLL');
+
 //           === posting new project ===
 
 router.post("/newProject", function (req, res) {
 
     let firstVersion = new Project({
-        projectName: req.body.projectName,
+        projectName: req.body.projectName, // ==> צריך להגיע בפרופס מאלכס
+        // _id : req.body.id,   ==> צריך להגיע בפרופס מאלכס
         allVersions: {
             projectName: req.body.projectName,
             additionalPricing: "",
@@ -29,7 +31,9 @@ router.post("/newProject", function (req, res) {
             versionNumber: 1,
             payment: '',
             date: `${date}`,
-            allActors: []
+            allActors: [],
+            scopingStatus: true,
+            pricingStatus: false
         }
     });
 
@@ -84,7 +88,9 @@ router.put('/newVersion/:projectId', function (req, res) {
                 specificationLink: currentVersion.specificationLink,
                 payment: currentVersion.payment,
                 date: `${date}`,
-                subjects: currentVersion.subjects
+                subjects: currentVersion.subjects,
+                scopingStatus: true,
+                pricingStatus: false
             }
 
             project.allVersions.push(newVersion);

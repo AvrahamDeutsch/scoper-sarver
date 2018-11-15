@@ -21,21 +21,21 @@ const Subject = new Schema({
 })
 
 const Task = new Schema({
-    task : String,
+    taskName : String,
     days : Number
 });
 
 const TaskContaner = new Schema({
     containerName: String,
     days : Number,
-    price : {type: Number, default: 0},
+    price : {type: String, default: ''},
     tasks: [Task]
 })
 
 const Process = new Schema({
     milestoneName : String,
     comment : {type: String, default: ''},
-    processTotalPrice : {type: Number, default: 0},
+    processTotalPrice :  {type: Number, default: 0},
     containers : [TaskContaner]
 })
 
@@ -60,13 +60,16 @@ const Version = new Schema({
     diagramLink: String,
     specificationDescription: String,
     specificationLink: String,
-    discount : {type: Number, default: 0}
+    discount : {type: Number, default: 0},
+    scopingStatus: Boolean,
+    pricingStatus: Boolean
 });
 
 const Project = new Schema({
     projectName: String,
     allVersions: [Version]
-});
+    // _id : Number
+})
 
 
 module.exports = mongoose.model("newProject", Project);

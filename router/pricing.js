@@ -5,6 +5,13 @@ const Project = require('../models/Project');
 
 //           === add pricing section to project ===
 
+/**
+                === add pricing section to project & update pricing status === 
+
+ *  this function will be calld when the info returns from effort evaluation
+ *  the PubSub will call this function 
+ */
+
 router.put('/:projectId', function (req, res) {
 
     Project.findById(req.params.projectId, (err, project) => {
@@ -13,6 +20,7 @@ router.put('/:projectId', function (req, res) {
             
             let currentVersion = project.allVersions[project.allVersions.length - 1];
             currentVersion.pricing = req.body.pricing;
+            currentVersion.pricingStatus = true
             
             project.save((err, version) => {
                 if (!err) {
@@ -120,6 +128,35 @@ router.put('/payment/:projectId', function (req, res) {
             project.save((err, version) => {
                 if (!err) {
                     res.send('payment added');
+
+                } else {
+                    res.send(err);
+                }
+            });
+        } else {
+            res.send(err);
+        }
+    })
+});
+
+/**
+                 === update scoping status === 
+
+ *  this function will be calld when the info will be send to effort evaluation
+ */
+
+router.put('/scopingStatus/:projectId', function (req, res) {
+
+    Project.findById(req.params.projectId, (err, project) => {
+
+        let currentVersion = project.allVersions[project.allVersions.length - 1];
+        if (!err) {
+
+            currentVersion.scopingStatus = false
+           
+            project.save((err, version) => {
+                if (!err) {
+                    res.send('status updated');
 
                 } else {
                     res.send(err);
