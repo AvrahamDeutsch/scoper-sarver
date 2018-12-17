@@ -22,14 +22,20 @@ const Subject = new Schema({
 
 const Task = new Schema({
     taskName : String,
-    days : Number
+    days : Number,
+    milestoneName: String,
+    complexity:String,
+    details:String,
+    assumptions:String
 });
 
 const TaskContaner = new Schema({
     containerName: String,
+    category:String,
     days : Number,
     price : {type: String, default: ''},
-    tasks: [Task]
+    tasks: [Task],
+    milestoneName:String
 })
 
 const Process = new Schema({
